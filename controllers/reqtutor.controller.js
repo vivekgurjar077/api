@@ -40,7 +40,6 @@ export const getreqtutor = async (req, res, next) => {
 export const getreqtutors = async (req, res, next) => {
   const q = req.query;
   const filters = {
-    ...(q.userId && { userId: q.userId }),
     ...(q.cat && { cat: q.cat }),
     ...((q.min || q.max) && {
       price: {

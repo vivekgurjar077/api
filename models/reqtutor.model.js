@@ -3,10 +3,7 @@ const { Schema } = mongoose;
 
 const ReqtutorSchema = new Schema(
   {
-    userId: {
-      type: String,
-      required: true,
-    },
+
     title: {
       type: String,
       required: true,
@@ -31,10 +28,6 @@ const ReqtutorSchema = new Schema(
       required: true,
     },
    
-    userId: {
-      type: String,
-      required: true,
-    },
     shortTitle: {
       type: String,
       required: true,

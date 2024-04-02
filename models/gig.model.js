@@ -3,10 +3,6 @@ const { Schema } = mongoose;
 
 const GigSchema = new Schema(
   {
-    userId: {
-      type: String,
-      required: true,
-    },
     title: {
       type: String,
       required: true,
@@ -31,10 +27,6 @@ const GigSchema = new Schema(
       required: true,
     },
    
-    userId: {
-      type: String,
-      required: true,
-    },
     shortTitle: {
       type: String,
       required: true,
@@ -51,3 +43,4 @@ const GigSchema = new Schema(
 );
 
 export default mongoose.model("Gig", GigSchema);
+

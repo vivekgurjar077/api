@@ -1,11 +1,9 @@
 import Gig from "../models/gig.model.js";
 import createError from "../utils/createError.js";
 import express from 'express';
+
 export const createGig = async (req, res, next) => {
-  
-  
   const newGig = new Gig({
-    userId: req.userId,
     ...req.body,
   });
 
@@ -16,6 +14,7 @@ export const createGig = async (req, res, next) => {
     next(err);
   }
 };
+
 export const deleteGig = async (req, res, next) => {
   if (!req.admin)
     return next(createError(403, "Only admin can delete a gig!"));
@@ -41,7 +40,6 @@ export const getGig = async (req, res, next) => {
 export const getGigs = async (req, res, next) => {
   const q = req.query;
   const filters = {
-    ...(q.userId && { userId: q.userId }),
     ...(q.cat && { cat: q.cat }),
     ...((q.min || q.max) && {
       price: {
