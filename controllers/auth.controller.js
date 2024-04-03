@@ -10,7 +10,6 @@ dotenv.config();
 
 export const login = async (req, res, next) => {
   try {
-    console.log(req.body);
     const user = await User.findOne({ username: req.body.username });
 
     if (!user) return next(createError(404, "User not found!"));
@@ -18,7 +17,7 @@ export const login = async (req, res, next) => {
     const isCorrect = bcrypt.compareSync(req.body.password, user.password);
     if (!isCorrect)
       return next(createError(400, "Wrong password or username!"));
-    console.log(isCorrect);
+    
     const token = jwt.sign(
       {
         id: user._id,
@@ -26,7 +25,7 @@ export const login = async (req, res, next) => {
       },
       process.env.JWT_KEY
     );
-      console.log(token);
+    
     const { password, ...info } = user._doc;
     res
       .cookie("accessToken", token, {
