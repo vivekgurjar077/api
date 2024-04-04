@@ -34,7 +34,7 @@ clientApp.get('/*',(req,res)=>{
   res.sendFile(path.join(__dirname + '/build/index.html'));
 })
 
-app.use(cors({ origin: ["http://localhost:5173","http://localhost","http://91.108.104.25"], credentials: true }));
+app.use(cors({ origin: ["http://localhost:5173","http://localhost","http://91.108.104.25","http://grittytechtutor.com","https://grittytechtutor.com"], credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use("/api/auth", authRoute);
@@ -57,6 +57,15 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log(`Backend server is running on port ${PORT}!`);
 });
 
-clientApp.listen(CLIENT_PORT,()=>{
-  console.log('Client app served on http://localhost');
+// clientApp.listen(CLIENT_PORT,()=>{
+//   console.log('Client app served on http://localhost');
+// });
+var privateKey = fs.readFileSync( '/etc/letsencrypt/live/grittytechtutor.com/privkey.pem' );
+var certificate = fs.readFileSync( '/etc/letsencrypt/live/grittytechtutor.com/fullchain.pem' );
+
+https.createServer({
+    key: privateKey,
+    cert: certificate
+}, clientApp).listen(CLIENT_PORT,() => {
+  console.log('frontend serving at - https://localhost'+CLIENT_PORT);
 });
