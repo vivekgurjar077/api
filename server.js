@@ -35,7 +35,7 @@ clientApp.get('/*',(req,res)=>{
   res.sendFile(path.join(__dirname + '/build/index.html'));
 })
 
-app.use(cors({ origin: ["http://localhost:5173","http://localhost","http://91.108.104.25","http://grittytechtutor.com","https://grittytechtutor.com"], credentials: true }));
+app.use(cors({ origin: ["http://localhost:5173","https://localhost:5173","http://localhost","https://localhost","http://91.108.104.25","http://grittytechtutor.com","https://grittytechtutor.com","https://91.108.104.25"], credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use("/api/auth", authRoute);
