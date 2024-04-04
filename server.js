@@ -9,7 +9,8 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import reqtutorrouter from "./routes/reqtutor.route.js";
 import path from "path";
-
+import fs from 'fs';
+import https from 'https';
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -60,12 +61,12 @@ app.listen(PORT, '0.0.0.0', () => {
 // clientApp.listen(CLIENT_PORT,()=>{
 //   console.log('Client app served on http://localhost');
 // });
-var privateKey = fs.readFileSync( '/etc/letsencrypt/live/grittytechtutor.com/privkey.pem' );
-var certificate = fs.readFileSync( '/etc/letsencrypt/live/grittytechtutor.com/fullchain.pem' );
+var privateKey = fs.readFileSync( './privkey.pem' );
+var certificate = fs.readFileSync( './fullchain.pem' );
 
 https.createServer({
     key: privateKey,
     cert: certificate
 }, clientApp).listen(CLIENT_PORT,() => {
-  console.log('frontend serving at - https://localhost'+CLIENT_PORT);
+  console.log('frontend serving at - https://localhost:'+CLIENT_PORT);
 });
