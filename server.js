@@ -30,33 +30,34 @@ const connect = async () => {
   }
 };
 
+
+clientApp.use(cors({ origin: ["http://localhost:5173","https://localhost:5173","http://localhost","https://localhost","http://91.108.104.25","http://grittytechtutor.com","https://grittytechtutor.com","https://91.108.104.25"], credentials: true }));
+clientApp.use(express.json());
+clientApp.use(cookieParser());
+clientApp.use("/api/auth", authRoute);
+clientApp.use("/api/users", userRoute);
+clientApp.use("/api/gigs", gigRoute);
+clientApp.use("/api/reqtutors", reqtutorrouter);
+clientApp.use("/api/newuser", newuser);
+
 clientApp.use(express.static(path.join('build')));
 clientApp.get('/*',(req,res)=>{
   res.sendFile(path.join(__dirname + '/build/index.html'));
 })
 
-app.use(cors({ origin: ["http://localhost:5173","https://localhost:5173","http://localhost","https://localhost","http://91.108.104.25","http://grittytechtutor.com","https://grittytechtutor.com","https://91.108.104.25"], credentials: true }));
-app.use(express.json());
-app.use(cookieParser());
-app.use("/api/auth", authRoute);
-app.use("/api/users", userRoute);
-app.use("/api/gigs", gigRoute);
-app.use("/api/reqtutors", reqtutorrouter);
-app.use("/api/newuser", newuser);
-
-app.use((err, req, res, next) => {
+clientApp.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
   const errorMessage = err.message || "Something went wrong!";
   return res.status(errorStatus).send(errorMessage);
 });
 
 const PORT = process.env.PORT || 8800;
-const CLIENT_PORT = process.env.client_port || 80;
+const CLIENT_PORT = process.env.client_port || 443;
 
-app.listen(PORT, '0.0.0.0', () => {
-  connect();
-  console.log(`Backend server is running on port ${PORT}!`);
-});
+// app.listen(PORT, '0.0.0.0', () => {
+//   connect();
+//   console.log(`Backend server is running on port ${PORT}!`);
+// });
 
 // clientApp.listen(CLIENT_PORT,()=>{
 //   console.log('Client app served on http://localhost');
@@ -68,5 +69,6 @@ https.createServer({
     key: privateKey,
     cert: certificate
 }, clientApp).listen(CLIENT_PORT,() => {
+  connect();
   console.log('frontend serving at - https://localhost:'+CLIENT_PORT);
 });
